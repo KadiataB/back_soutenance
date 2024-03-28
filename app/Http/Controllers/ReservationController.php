@@ -18,7 +18,6 @@ class ReservationController extends Controller
     public function index()
     {
         $reversations=Reservation::all();
-
         return response([
             "message" => "Voici la liste des réservations",
             "data"=>$reversations

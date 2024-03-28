@@ -40,7 +40,7 @@ class MediasController extends Controller
         foreach($request->images as $image) {
             $path = str_replace('data:image/jpeg;base64,', '', $image['photo_name']);
             $image = base64_decode($path);
-            // $fileName = uniqid('image_') . '.jpg';
+    
 
          $media=   Medias::create([
                 "path"=>$path,

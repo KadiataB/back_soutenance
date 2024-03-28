@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hote;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class HoteController extends Controller
 {
@@ -28,7 +29,19 @@ class HoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hote =  Hote::create([
+            "nom" => $request->nom,
+            "prenom" => $request->prenom,
+            "tel" => $request->tel,
+            "adresse" => $request->adresse,
+            'cni' => $request->cni,
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+        return response([
+            "message" => "insertion hote réussie",
+            "data" => $hote
+        ], Response::HTTP_CREATED);
     }
 
     /**
