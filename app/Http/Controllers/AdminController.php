@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     /**
@@ -20,7 +20,17 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $admin=  Admin::create([
+            "nom"=>$request->nom,
+            "prenom"=>$request->prenom,
+            "tel"=>$request->tel,
+            "adresse"=>$request->adresse
+        ]);
+        return response([
+            "message" => "insertion admin réussie",
+            "data"=>$admin
+        ], Response::HTTP_CREATED);
+
     }
 
     /**
