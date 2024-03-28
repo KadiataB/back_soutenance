@@ -36,6 +36,31 @@ class ClientController extends Controller
         ], Response::HTTP_CREATED);
     }
 
+    // public function login(Request $request)
+    // {
+    // //   $user=User::where(['email'=>$request->email,'password'=>$request->password])->get();
+    // //   return $user;
+    //     if (!Auth::attempt($request->only("email", "password"))) {
+
+    //         return response()->json([
+    //             "success" => "true",
+    //             "message" => "Invalid credentials"
+
+    //         ]);
+    //     }
+    //     $user = Auth::user();
+    //     $token = $user->createToken("token")->plainTextToken;
+
+    //     $tok=cookie('myToken',$token);
+        
+    //     return response([
+    //         "token" => $token,
+    //         "name" => $user->name,
+    //         "role" => $user->role,
+    //         "email" => $user->email
+           
+    //     ])->withCookie($tok);
+    // }
     /**
      * Display the specified resource.
      */
