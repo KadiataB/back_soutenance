@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationRequest;
+use App\Models\Client;
+use App\Models\Hote;
 use App\Models\Reservation;
 use App\Models\Site;
 use App\Models\User;
@@ -61,14 +63,14 @@ class ReservationController extends Controller
 
         $prix_total= $duree * $site->prix;
 
-        $client=User::where('id', $request->client_id)->value('role');
-
+        $user=User::where('id', $request->user_id)->first();
+        $client=$user->role;
         if($client!= "client") {
             return response([
                 "message" => "Ce client n'existe pas"
             ], Response::HTTP_BAD_REQUEST);
         }
-        $hote=User::where('id', $request->hote_id)->value('role');
+        $hote=User::where('id', $request->user_id)->first();
 
         if($hote!= "hote") {
             return response([
@@ -80,8 +82,7 @@ class ReservationController extends Controller
             $reservation =Reservation::create([
                "date_debut"=>$request->date_debut,
                "date_fin"=>$request->date_fin,
-               "client_id"=>$request->client_id,
-               "hote_id"=>$request->hote_id,
+               "user_id"=>$request->user_id,
                "nbre_voyageurs"=>$request->nbre_voyageurs,
                "prix_total"=>$prix_total,
                "site_id"=>$site->id

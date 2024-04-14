@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Site extends Model
 {
@@ -14,5 +15,12 @@ class Site extends Model
     
     function hote():BelongsTo {
         return $this->belongsTo(User::class, "hote_id");
+    }
+    function details(){
+        return $this->belongsToMany(Details::class,"details_sites");    
+    }
+   
+    function medias(){
+        return $this->hasMany(Medias::class);
     }
 }
