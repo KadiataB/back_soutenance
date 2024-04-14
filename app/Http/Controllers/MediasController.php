@@ -40,7 +40,7 @@ class MediasController extends Controller
         foreach($request->images as $image) {
             $path = str_replace('data:image/jpeg;base64,', '', $image['photo_name']);
             $image = base64_decode($path);
-    
+
 
          $media=   Medias::create([
                 "path"=>$path,
@@ -54,6 +54,25 @@ class MediasController extends Controller
 
 
     }
+    public function ajouterImages(Request $request)
+    {
+        // Valider la requête pour vous assurer que vous avez reçu les données correctement
+        $request->validate([
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Exemple de validation pour les images
+        ]);
+
+        // Parcourir chaque fichier téléchargé et les enregistrer dans la base de données
+        foreach ($request->file('images') as $image) {
+            $media = new Medias();
+            $media->site_id = $request->site_id; // Supposons que vous avez un champ "site_id" dans votre table medias
+            $media->path = base64_encode(file_get_contents($image)); // Convertit l'image en base64 et enregistre-la
+            $media->save();
+        }
+
+        // Faites quelque chose après l'insertion, par exemple, redirigez l'utilisateur ou renvoyez une réponse JSON
+        return response()->json(['success' => true, 'message' => 'Images ajoutées avec succès']);
+    }
+
 
     /**
      * Display the specified resource.

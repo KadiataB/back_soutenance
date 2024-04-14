@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationRequest;
+use App\Http\Requests\UserRequest;
+use App\Http\Resources\reservationResource;
+use App\Models\Client;
+use App\Models\Hote;
 use App\Models\Reservation;
 use App\Models\Site;
 use App\Models\User;
@@ -17,11 +21,21 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reversations=Reservation::all();
+        $reservations=Reservation::all();
         return response([
             "message" => "Voici la liste des réservations",
-            "data"=>$reversations
+            "data"=>reservationResource::collection($reservations)
         ], Response::HTTP_OK);
+    }
+
+    function reservationById(Request $request) {
+
+      $reservations=  Reservation::where('client_id',$request->client_id)->get();
+      return response([
+        "message" => "Voici la liste des réservations",
+        "data"=>reservationResource::collection($reservations)
+        // "data"=>$reservations
+    ], Response::HTTP_OK);
     }
 
 
@@ -31,8 +45,8 @@ class ReservationController extends Controller
      */
     public function store(ReservationRequest $request)
     {
-
         $site= Site::where("id",$request->site_id)->first();
+        // return $site;
         $existingReservation = Reservation::where('site_id', $site->id)
         ->where('date_debut','<',$request->date_fin)
         ->where('date_fin','>',$request->date_debut)
@@ -61,16 +75,19 @@ class ReservationController extends Controller
 
         $prix_total= $duree * $site->prix;
 
-        $client=User::where('id', $request->client_id)->value('role');
-
-        if($client!= "client") {
+        $user=User::where('id', $request->client_id)->first();
+        // return $user->role;
+        $client=$user->role;
+        if($client!="client") {
             return response([
                 "message" => "Ce client n'existe pas"
             ], Response::HTTP_BAD_REQUEST);
         }
-        $hote=User::where('id', $request->hote_id)->value('role');
+        $user=User::where('id', $request->hote_id)->first();
+        // $hote=$user->role;
 
-        if($hote!= "hote") {
+         $hote= $user->role;
+        if($hote!="hote") {
             return response([
                 "message" => "Ce hote n'existe pas"
             ], Response::HTTP_BAD_REQUEST);
@@ -103,7 +120,7 @@ class ReservationController extends Controller
 
     }
 
-    /** 
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Reservation $reservation)
