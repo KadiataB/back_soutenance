@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HoteController;
@@ -35,6 +36,8 @@ Route::get("/reservations", [ReservationController::class, "index"]);
 Route::post("/hote", [HoteController::class, "store"]);
 Route::post("/client", [ClientController::class, "store"]);
 Route::post("/admin", [AdminController::class, "store"]);
+
 Route::get("/mediaSite/{siteId}",[MediasController::class,"getMediasBySiteId"]);
+
 
 
