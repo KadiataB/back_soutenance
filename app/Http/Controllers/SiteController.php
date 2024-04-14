@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SiteResource;
 use App\Models\Site;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
@@ -17,7 +19,7 @@ class SiteController extends Controller
         return response()->json([
           "data"=> [
           "message" => "Voici la liste des sites",
-          "sites"=>$sites
+          "sites"=>SiteResource::collection($sites)
           ]
         ], Response::HTTP_OK);
     }
@@ -27,13 +29,24 @@ class SiteController extends Controller
      */
     public function store(Request $request)
     {
-         $site=Site::create($request->all());
+        return DB::transaction(function()use($request) {
+         $site=Site::create([
+            "hote_id"=>$request->hote_id,
+            "localisation"=>$request->localisation,
+            "prix"=>$request->prix,
+            "latitude"=>$request->latitude,
+            "longitude"=>$request->longitude,
+         ]);
 
+
+        $site->details()->attach($request->details);
         return response([
             "message"=>"Ajout réussi",
             "data"=>$site
          ], Response::HTTP_CREATED);
-    }
+
+    });
+}
 
     /**
      * Display the specified resource.

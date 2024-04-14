@@ -27,13 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get("/users", [UserController::class, "index"]);
 Route::post("/users", [UserController::class, "create"]);
-Route::post("/sites", [SiteController::class, "store"]);
+Route::resource("/sites", SiteController::class);
 Route::get("admin/liste/sites", [SiteController::class, "index"]);
-Route::post("/medias", [MediasController::class, "store"]);
+Route::resource("/medias", MediasController::class);
 Route::post("/reservations", [ReservationController::class, "store"]);
 Route::get("/reservations", [ReservationController::class, "index"]);
 Route::post("/hote", [HoteController::class, "store"]);
 Route::post("/client", [ClientController::class, "store"]);
 Route::post("/admin", [AdminController::class, "store"]);
+Route::get("/mediaSite/{siteId}",[MediasController::class,"getMediasBySiteId"]);
 
 
