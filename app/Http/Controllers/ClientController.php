@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClientController extends Controller
@@ -13,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+    //    return Client::all();
     }
 
     /**
@@ -21,46 +22,29 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $client=  Client::create([
-            "nom"=>$request->nom,
-            "prenom"=>$request->prenom,
-            "tel"=>$request->tel,
-            "adresse"=>$request->adresse,
-            "cni"=>$request->cni,
-            "email"=>$request->email,
-            'password' => $request->password
-        ]);
-        return response([
-            "message" => "insertion client réussie",
-            "data"=>$client
-        ], Response::HTTP_CREATED);
+        // $client=  Client::create([
+        //     "nom"=>$request->nom,
+        //     "prenom"=>$request->prenom,
+        //     "tel"=>$request->tel,
+        //     "adresse"=>$request->adresse,
+        //     "cni"=>$request->cni,
+        //     "email"=>$request->email,
+        //     'password' => $request->password
+        // ]);
+        // return response([
+        //     "message" => "insertion client réussie",
+        //     "data"=>$client
+        // ], Response::HTTP_CREATED);
     }
 
     // public function login(Request $request)
     // {
-    // //   $user=User::where(['email'=>$request->email,'password'=>$request->password])->get();
-    // //   return $user;
-    //     if (!Auth::attempt($request->only("email", "password"))) {
-
-    //         return response()->json([
-    //             "success" => "true",
-    //             "message" => "Invalid credentials"
-
-    //         ]);
-    //     }
-    //     $user = Auth::user();
-    //     $token = $user->createToken("token")->plainTextToken;
-
-    //     $tok=cookie('myToken',$token);
-        
-    //     return response([
-    //         "token" => $token,
-    //         "name" => $user->name,
-    //         "role" => $user->role,
-    //         "email" => $user->email
-           
-    //     ])->withCookie($tok);
+       
+    //     $client=Client::where(['tel'=>$request->email,'password'=>$request->password])->first();
+    //   return $client;
     // }
+    
+    
     /**
      * Display the specified resource.
      */
