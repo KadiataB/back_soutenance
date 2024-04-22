@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
 class UserRequest extends FormRequest
 {
@@ -27,15 +30,32 @@ class UserRequest extends FormRequest
             'num_tel' => 'required|string|unique:users|max:255',
             'CNI' => 'required|string|unique:users|max:255',
             'email' => 'required|string|email|unique:users|max:255',
-            'role' => 'required|in:hote,client,admin',
+            'role' => 'sometimes|in:client,admin',
             'password' => 'required|string|min:8',
-            'description' => 'string'
+            'description' => 'required'
         ];
     }
 
     public function messages(){
         return [
-            "nom.required" => " Le champ nom est obligatoire"
+            "nom.required" => " Le champ nom est obligatoire\n",
+            "prenom.required" => " Le champ prenom est obligatoire",
+            "CNI.required" => " Le champ CNI est obligatoire",
+            "email.required" => " Le champ email est obligatoire",
+            "password.required" => " Le champ password est obligatoire",
+            "description.required" => " Le champ description est obligatoire",
+            "num_tel.required" => " Le champ num_tel est obligatoire",
         ];
+        
     }
+
+    public function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors()->all();
+        $message = implode(', ', $errors);
+        throw new HttpResponseException(
+         response()->json($message,Response::HTTP_BAD_REQUEST)
+        );
+    }
+
 }

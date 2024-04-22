@@ -30,11 +30,11 @@ class UserController extends Controller
         $validated_data = $this->validate($request, [
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
-            'num_tel' => 'required|string|unique:users|max:255',
+            'num_tel' => 'required|string|unique:users|between:9,9',
             'CNI' => 'required|string|unique:users|max:255',
             'email' => 'required|string|email|unique:users|max:255',
-            'role' => 'required|in:hote,client,admin',
             'password' => 'required|string|min:8',
+            'img' => 'string',
             'description' => 'string'
 
         ]);
