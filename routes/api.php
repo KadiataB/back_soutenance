@@ -22,22 +22,28 @@ use App\Http\Controllers\ReservationController;
 |
 */
 
+Route::middleware('cors')->post('/api', 'ApiController@method');
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::get("/users", [UserController::class, "index"]);
-Route::post("/users", [UserController::class, "create"]);
+Route::post("/users", [AuthController::class, "store"]);
+// Route::post("/users", [UserController::class, "create"]);
+
+Route::post("/login", [AuthController::class, "login"]);
+
+Route::post("/logout", [AuthController::class, "logout"]);
 Route::resource("/sites", SiteController::class);
 Route::get("admin/liste/sites", [SiteController::class, "index"]);
 Route::resource("/medias", MediasController::class);
 Route::post("/reservations", [ReservationController::class, "store"]);
 Route::get("/reservations", [ReservationController::class, "index"]);
+Route::get("/reservations/client", [ReservationController::class, "reservationById"]);
 Route::post("/hote", [HoteController::class, "store"]);
 Route::post("/client", [ClientController::class, "store"]);
 Route::post("/admin", [AdminController::class, "store"]);
 
-Route::get("/mediaSite/{siteId}",[MediasController::class,"getMediasBySiteId"]);
-
-
-
+Route::get("/mediaSite/{siteId}", [MediasController::class, "getMediasBySiteId"]);
