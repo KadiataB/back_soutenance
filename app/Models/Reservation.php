@@ -12,9 +12,14 @@ class Reservation extends Model
 
     protected $guarded=[];
 
-    function user() : BelongsTo {
-        return $this->belongsTo(User::class);
+    function hote() : BelongsTo {
+        return $this->belongsTo(Hote::class);
     }
+
+    function client() : BelongsTo {
+        return $this->belongsTo(Client::class);
+    }
+
 
     function site() : BelongsTo {
         return $this->belongsTo(Site::class);
