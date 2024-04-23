@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HoteController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\MediasController;
+use Symfony\Component\Console\Input\Input;
+use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ReservationController;
 
 /*
@@ -31,10 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get("/users", [UserController::class, "index"]);
 Route::post("/users", [AuthController::class, "store"]);
-// Route::post("/users", [UserController::class, "create"]);
-
 Route::post("/login", [AuthController::class, "login"]);
-
 Route::post("/logout", [AuthController::class, "logout"]);
 Route::resource("/sites", SiteController::class);
 Route::get("admin/liste/sites", [SiteController::class, "index"]);
@@ -45,5 +45,7 @@ Route::get("/reservations/client", [ReservationController::class, "reservationBy
 Route::post("/hote", [HoteController::class, "store"]);
 Route::post("/client", [ClientController::class, "store"]);
 Route::post("/admin", [AdminController::class, "store"]);
-
+Route::get("/mediaSite/{siteId}",[MediasController::class,"getMediasBySiteId"]);
+Route::get("paiements",[PaiementController::class]);
 Route::get("/mediaSite/{siteId}", [MediasController::class, "getMediasBySiteId"]);
+

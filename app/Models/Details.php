@@ -13,6 +13,6 @@ class Details extends Model
     protected $guarded=[];
 
     function sites():BelongsToMany {
-        return $this->belongsToMany(Site::class,"details_sites");    
+        return $this->belongsToMany(Site::class,"details_sites")->withPivot('id','details_id');    
     }
 }

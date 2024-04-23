@@ -15,11 +15,11 @@ class mediasResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "site_id" => $this->site->id,
-            "prix"=>$this->site->prix,
-            "localisation"=>$this->site->localisation,
-            "latitude"=>$this->site->latitude,
-            "longitude"=>$this->site->longitude,
+            "site" => SiteResource::make($this->site),
+            // "prix"=>$this->site->prix,
+            // "localisation"=>$this->site->localisation,
+            // "latitude"=>$this->site->latitude,
+            // "longitude"=>$this->site->longitude,
             "medias" => $this->path
         ];
     }
