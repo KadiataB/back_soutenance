@@ -17,7 +17,7 @@ class Site extends Model
         return $this->belongsTo(User::class, "hote_id");
     }
     function details(){
-        return $this->belongsToMany(Details::class,"details_sites");    
+        return $this->belongsToMany(Details::class,"details_sites")->withPivot('id','details_id');    
     }
    
     function medias(){

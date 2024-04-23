@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PaiementController extends Controller
 {
+    
+
+
+
+
     /**
      * Display a listing of the resource.
      */

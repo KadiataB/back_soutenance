@@ -21,7 +21,14 @@ class SiteResource extends JsonResource
             "prix"=> $this->prix,
             "latitude"=> $this->latitude,
             "longitude"=> $this->longitude,
-            "medias"=>$this->medias
+            "medias"=>$this->medias,
+            "details"=>$this->details->map(function($d)
+            {
+
+                return [
+                   "libelle"=>$d->libelle, 
+                ];
+            })
         ];
     }
 }

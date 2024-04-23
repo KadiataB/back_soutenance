@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use App\Providers\PaytechServiceProvider;
 
 return [
 
@@ -163,6 +164,7 @@ return [
         /*
          * Application Service Providers...
          */
+        // PaytechServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

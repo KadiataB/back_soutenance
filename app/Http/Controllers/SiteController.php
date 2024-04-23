@@ -23,7 +23,7 @@ class SiteController extends Controller
           ]
         ], Response::HTTP_OK);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */

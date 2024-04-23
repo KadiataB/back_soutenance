@@ -35,7 +35,7 @@ class MediasController extends Controller
         // Récupérer tous les médias associés à ce site
         $medias = Medias::where('site_id', $siteId)->get();
 
-        return response()->json(['message' => 'Liste des médias du site récupérée avec succès', 'data' => $medias], 200);
+        return response()->json(['message' => 'Liste des médias du site récupérée avec succès', 'data' => mediasResource::collection($medias)], 200);
     }
     
 
